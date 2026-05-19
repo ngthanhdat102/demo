@@ -1,5 +1,5 @@
 const DS_DON_VI = {
-    "Trung tâm Kinh doanh VNPT Hà Nội (VNPT)": [
+    "VNPT": [
         "CHGD 165 Cầu Giấy",
         "CHGD 30 Phạm Hùng",
         "CHGD Ngãi Cầu",
@@ -51,7 +51,7 @@ const DS_DON_VI = {
         "CHGD Ngọc Lâm",
         "CHGD Nguyễn Thái Học",
     ],
-    "Công ty Dịch vụ MobiFone Khu vực I (Mobifone)": [
+    "Mobifone": [
         "Cửa hàng Đông Anh",
         "Cửa hàng 61 Minh Khai",
         "CHGD MobiFone H. Ba Vì",
@@ -97,7 +97,7 @@ const DS_DON_VI = {
         "Cửa hàng 97 Nguyễn Chí Thanh",
         "Cửa hàng 213 Xã Đàn",
     ],
-    "Công ty TNHH Nhà nước MTV TM & XNK Viettel (Viettel Store)": [
+    "Viettel Store": [
         "HNI05",
         "HNI02",
         "HNI03",
@@ -125,7 +125,7 @@ const DS_DON_VI = {
         "HNI92",
         "HNI06",
     ],
-    "Công ty cổ phần bán lẻ kỹ thuật số FPT (FPT Retail)": [
+    "FPT Retail": [
         "FPT Shop Hải Bối",
         "FPT Shop 155 Vân Trì",
         "FPT Shop Tiền Phong Mê Linh",
@@ -187,7 +187,7 @@ const DS_DON_VI = {
         "FPT Shop Tiểu Khu Mỹ Lâm",
         "Long Châu 106-108 Ngô Xuân Quảng",
     ],
-    "Ngân hàng TMCP Đầu tư và Phát triển Việt Nam (BIDV)": [
+    "BIDV": [
         "PGD Lộc Hà",
         "CN Đông Hà Nội",
         "CN Long Biên Hà Nội",
@@ -396,7 +396,7 @@ const DS_DON_VI = {
         "Chi nhánh Hồng Hà",
 
     ],
-    "Tổng công ty Bưu chính Viettel (Viettel Post)": [
+    "Viettel Post": [
         "Bưu cục Mỹ Đức",
         "Bưu cục Hà Đông",
         "Bưu cục Tây Nam Linh Đàm",
@@ -425,7 +425,7 @@ const DS_DON_VI = {
         "Bưu cục Thanh Liệt",
         "Bưu cục Nguyễn Tuân",
     ],
-    "Tổng công ty Bưu điện Việt Nam (VN Post)": [
+    "VN Post": [
         "Bưu cục Tây Mỗ",
         "Bưu cục Đan Phượng",
         "Bưu cục Đức Giang",
