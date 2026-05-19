@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo chất lượng Đại lý Dịch vụ công trực tuyến</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Quicksand', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff', 100: '#e0effe', 500: '#3b82f6',
+                            600: '#00529c', 800: '#003366',
+                        },
+                        bglight: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#e0effe 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .fade-enter { opacity: 0; transform: translateY(10px) scale(0.98); }
+        .fade-enter-active { opacity: 1; transform: translateY(0) scale(1); transition: opacity 400ms ease-out, transform 400ms ease-out; }
+        .fade-exit { opacity: 1; transform: translateY(0) scale(1); }
+        .fade-exit-active { opacity: 0; transform: translateY(-10px) scale(0.98); transition: opacity 300ms ease-in, transform 300ms ease-in; }
+
+        .emoji-btn { filter: grayscale(100%) opacity(50%); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .emoji-btn:hover { filter: grayscale(0%) opacity(100%); transform: scale(1.15); }
+        .emoji-btn.selected {
+            filter: grayscale(0%) opacity(100%); transform: scale(1.25);
+            filter: drop-shadow(0 10px 15px rgba(0, 82, 156, 0.3));
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
+    </style>
+</head>
+<body class="text-gray-800 min-h-screen flex flex-col antialiased">
+
+    <header class="w-full bg-white/90 backdrop-blur-md shadow-sm border-b border-brand-100 py-4 px-6 fixed top-0 z-10 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center text-2xl">
+                <i class="ph-fill ph-bank"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-brand-800 text-lg leading-tight uppercase">Báo cáo chất lượng Đại lý Dịch vụ công trực tuyến</h1>
+                <p class="text-xs text-gray-500 font-medium">Lấy sự hài lòng của người dân làm thước đo phục vụ</p>
+            </div>
+        </div>
+        
+        <button id="btnOpenConfig" class="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-full border border-gray-200 hover:bg-gray-100 transition-colors cursor-pointer group">
+            <div id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></div>
+            <span id="txtCurrentUnit" class="text-sm font-bold text-gray-600 group-hover:text-brand-600 transition-colors">Khai báo đơn vị</span>
+            <i class="ph-bold ph-caret-down text-gray-400"></i>
+        </button>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center p-4 pt-24 pb-12 relative w-full max-w-4xl mx-auto overflow-hidden">
+        
+        <section id="agent-screen" class="w-full max-w-3xl transition-all duration-500 absolute">
+            <div class="bg-white rounded-3xl shadow-xl shadow-brand-100/50 border border-brand-50 p-6 md:p-10">
+                <div class="mb-6 text-center">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Nhập thông tin hỗ trợ</h2>
+                    <p class="text-gray-500 text-sm">Nhân viên hoàn tất biểu mẫu trước khi chuyển thiết bị cho công dân.</p>
+                </div>
+
+                <form id="agent-form" class="space-y-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold text-gray-700 ml-1">Tên nhân viên hỗ trợ <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <i class="ph ph-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl"></i>
+                                <input type="text" id="tenNhanVien" required placeholder="Nhập họ và tên nhân viên" class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-brand-500 outline-none transition-all text-gray-700 font-medium">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold text-gray-700 ml-1">Tên khách hàng <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <i class="ph ph-identification-card absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl"></i>
+                                <input type="text" id="tenKhachHang" required placeholder="Nhập tên khách hàng" class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-brand-500 outline-none transition-all text-gray-700 font-medium">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        
+                        <div class="space-y-2 relative">
+                            <label class="text-sm font-semibold text-gray-700 ml-1">Tên thủ tục hành chính <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <i class="ph ph-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl"></i>
+                                <input type="text" id="searchTTHC" disabled required autocomplete="off" placeholder="Gõ từ khóa để tìm TTHC..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-100 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-brand-500 outline-none transition-all text-gray-700 font-medium disabled:opacity-60 disabled:cursor-not-allowed">
+                            </div>
+                            <div id="suggestTTHC" class="absolute left-0 right-0 mt-1 max-h-48 bg-white border border-gray-100 rounded-2xl shadow-xl overflow-y-auto hidden z-20 custom-scrollbar ring-1 ring-gray-900/5"></div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold text-gray-700 ml-1">Lĩnh vực hỗ trợ <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <i class="ph ph-folders absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl pointer-events-none"></i>
+                                <select id="linhVuc" required class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-50 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-brand-500 outline-none transition-all text-gray-700 font-medium cursor-pointer appearance-none">
+                                    <option value="">-- Chọn lĩnh vực --</option>
+                                </select>
+                                <i class="ph ph-caret-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold text-gray-700 ml-1">Trạng thái kết quả <span class="text-red-500">*</span></label>
+                            <div class="flex gap-3 h-[56px]">
+                                <label class="relative flex-1 flex items-center justify-center cursor-pointer group">
+                                    <input type="radio" name="trangThaiRadio" value="Thành công" class="peer sr-only" required>
+                                    <div class="w-full h-full flex items-center justify-center gap-2 bg-white border-2 border-gray-200 rounded-2xl transition-all duration-200 group-hover:border-brand-300 peer-checked:bg-brand-600 peer-checked:border-brand-600 peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-brand-500/40 text-gray-500 font-bold text-base">
+                                        
+                                        Thành công
+                                    </div>
+                                </label>
+                                <label class="relative flex-1 flex items-center justify-center cursor-pointer group">
+                                    <input type="radio" name="trangThaiRadio" value="Không thành công" class="peer sr-only" required>
+                                    <div class="w-full h-full flex items-center justify-center gap-2 bg-white border-2 border-gray-200 rounded-2xl transition-all duration-200 group-hover:border-orange-300 peer-checked:bg-orange-500 peer-checked:border-orange-500 peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-orange-500/40 text-gray-500 font-bold text-base">
+                                        
+                                        Thất bại
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold text-gray-700 ml-1">Mã hồ sơ</label>
+                            <div class="relative">
+                                <i class="ph ph-barcode absolute left-4 top-1/2 transform -translate-y-1/2 text-brand-500 text-xl"></i>
+                                <input type="text" id="maHoSo" disabled placeholder="VD: h26.103.25..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-100 border-none ring-1 ring-gray-200 outline-none transition-all text-gray-400 font-bold disabled:opacity-60 disabled:cursor-not-allowed">
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-sm font-semibold text-gray-700 ml-1">Lý do chưa nộp</label>
+                            <div class="relative">
+                                <i class="ph ph-warning-circle absolute left-4 top-1/2 transform -translate-y-1/2 text-orange-500 text-xl"></i>
+                                <input type="text" id="lyDo" disabled placeholder="VD: Thiếu giấy tờ" class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-100 border-none ring-1 ring-gray-200 outline-none transition-all text-gray-400 font-medium disabled:opacity-60 disabled:cursor-not-allowed">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-brand-600 hover:bg-brand-800 text-white font-bold text-lg py-4 rounded-2xl shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 active:scale-95 cursor-pointer">
+                            Hoàn tất & Mời công dân đánh giá
+                            <i class="ph-bold ph-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="citizen-screen" class="w-full max-w-3xl hidden transition-all duration-500 absolute">
+            <div class="bg-white rounded-[2rem] shadow-2xl shadow-brand-100 border border-brand-50 p-8 md:p-12 text-center relative overflow-hidden">
+                <div class="absolute -top-16 -left-16 w-32 h-32 bg-amber-100 rounded-full blur-2xl opacity-60"></div>
+                <div class="absolute -bottom-16 -right-16 w-40 h-40 bg-brand-100 rounded-full blur-2xl opacity-60"></div>
+
+                <div class="relative z-10">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-brand-50 text-brand-600 rounded-full mb-6">
+                        <i class="ph-fill ph-hand-waving text-3xl"></i>
+                    </div>
+                    
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 tracking-tight">Ý kiến của bạn rất quan trọng!</h2>
+                    <p class="text-lg text-gray-500 mb-10 max-w-lg mx-auto">Bạn cảm thấy như thế nào về sự hỗ trợ của nhân viên đại lý ngày hôm nay?</p>
+
+                    <div class="flex justify-center gap-3 md:gap-6 mb-10">
+                        <button type="button" class="emoji-btn flex flex-col items-center gap-2 outline-none group" data-rating="1">
+                            <span class="text-5xl md:text-6xl">😠</span><span class="text-xs md:text-sm font-bold text-gray-400 group-[.selected]:text-red-500">Rất kém</span>
+                        </button>
+                        <button type="button" class="emoji-btn flex flex-col items-center gap-2 outline-none group" data-rating="2">
+                            <span class="text-5xl md:text-6xl">🙁</span><span class="text-xs md:text-sm font-bold text-gray-400 group-[.selected]:text-orange-500">Kém</span>
+                        </button>
+                        <button type="button" class="emoji-btn flex flex-col items-center gap-2 outline-none group" data-rating="3">
+                            <span class="text-5xl md:text-6xl">😐</span><span class="text-xs md:text-sm font-bold text-gray-400 group-[.selected]:text-yellow-600">Bình thường</span>
+                        </button>
+                        <button type="button" class="emoji-btn flex flex-col items-center gap-2 outline-none group" data-rating="4">
+                            <span class="text-5xl md:text-6xl">🙂</span><span class="text-xs md:text-sm font-bold text-gray-400 group-[.selected]:text-blue-500">Hài lòng</span>
+                        </button>
+                        <button type="button" class="emoji-btn flex flex-col items-center gap-2 outline-none group" data-rating="5">
+                            <span class="text-5xl md:text-6xl">😍</span><span class="text-xs md:text-sm font-bold text-gray-400 group-[.selected]:text-brand-600">Rất hài lòng</span>
+                        </button>
+                    </div>
+
+                    <div id="feedback-container" class="hidden mb-8 max-w-md mx-auto opacity-0 transition-opacity duration-300">
+                        <textarea id="gopY" placeholder="Bạn có muốn góp ý thêm điều gì không? (Không bắt buộc)" class="w-full px-5 py-4 rounded-2xl bg-gray-50 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-brand-500 outline-none resize-none h-24 text-gray-700 font-medium"></textarea>
+                    </div>
+
+                    <button id="submit-rating-btn" disabled class="bg-gray-300 text-gray-500 font-bold text-xl py-4 px-12 rounded-full cursor-not-allowed transition-all duration-300 mx-auto block w-full max-w-sm">
+                        Gửi Đánh Giá
+                    </button>
+                    
+                    <button id="back-to-agent" class="mt-6 text-sm text-gray-400 hover:text-gray-600 underline decoration-gray-300 underline-offset-4 cursor-pointer bg-transparent border-none">
+                        Quay lại (Dành cho nhân viên)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="thankyou-screen" class="w-full max-w-md hidden transition-all duration-500 absolute">
+            <div class="bg-white rounded-[2rem] shadow-xl shadow-brand-100 border border-brand-50 p-10 text-center">
+                <div class="w-24 h-24 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-6 text-brand-600 animate-bounce">
+                    <i class="ph-fill ph-check-circle text-6xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-3">Cảm ơn bạn!</h2>
+                <p class="text-gray-500 text-sm">Đánh giá của bạn giúp chúng tôi nâng cao chất lượng dịch vụ mỗi ngày.</p>
+                <div class="mt-8">
+                    <div class="w-full bg-gray-100 rounded-full h-1.5 mb-2 overflow-hidden">
+                        <div class="bg-brand-500 h-1.5 rounded-full transition-all duration-1000 ease-linear w-0" id="progress-bar"></div>
+                    </div>
+                    <p class="text-xs text-gray-400">Hệ thống sẽ tự động làm mới sau <span id="countdown">3</span>s...</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="modalConfig" class="fixed inset-0 bg-gray-900/40 backdrop-blur-sm hidden items-center justify-center z-50 p-4 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 border border-gray-100 transform transition-transform scale-95 duration-300">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800 tracking-tight">Khai báo đơn vị làm việc</h3>
+                <button type="button" id="btnCloseModal" class="text-gray-400 hover:text-gray-600 hidden bg-gray-50 p-2 rounded-full border-none cursor-pointer">
+                    <i class="ph-bold ph-x"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-5">
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700 ml-1">Đơn vị chủ quản</label>
+                    <div class="relative">
+                        <select id="parentUnit" class="w-full px-4 py-3.5 rounded-2xl bg-gray-50 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-brand-500 outline-none transition-all text-gray-700 font-medium cursor-pointer appearance-none">
+                            <option value="">-- Chọn nhà mạng / đơn vị --</option>
+                        </select>
+                        <i class="ph ph-caret-down absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                    </div>
+                </div>
+                
+                <div class="space-y-2 relative">
+                    <label class="text-sm font-semibold text-gray-700 ml-1">Cửa hàng / Điểm giao dịch</label>
+                    <div class="relative">
+                        <i class="ph ph-map-pin absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl"></i>
+                        <input type="text" id="searchCuaHang" disabled autocomplete="off" placeholder="Gõ tìm tên cửa hàng..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-100 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-brand-500 outline-none transition-all text-gray-700 font-medium disabled:opacity-60 disabled:cursor-not-allowed">
+                    </div>
+                    <div id="suggestCuaHang" class="absolute left-0 right-0 mt-1 bg-white border border-gray-100 rounded-2xl shadow-xl overflow-y-auto max-h-40 hidden z-30 custom-scrollbar ring-1 ring-gray-900/5"></div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-end gap-3 pt-2">
+                <button type="button" id="btnCancelConfig" class="px-6 py-3 text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-2xl font-bold transition hidden border-none cursor-pointer">Hủy</button>
+                <button type="button" id="btnSaveConfig" disabled class="px-6 py-3 text-white bg-gray-300 font-bold rounded-2xl cursor-not-allowed transition border-none">Lưu thiết lập</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="w-full py-4 text-center text-sm text-gray-500 border-t border-gray-200 fixed bottom-0 bg-bglight/80 backdrop-blur-sm z-10">
+       Trong quá trình sử dụng có vấn đề vui lòng liên hệ:
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="api.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
