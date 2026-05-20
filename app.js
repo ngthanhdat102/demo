@@ -281,10 +281,6 @@ function initEvaluationLogic(agentScreen, citizenScreen, thankyouScreen, agentFo
                 // Khôi phục form nhân viên về trạng thái bị khóa mặc định
                 agentForm.reset();
                 
-                const searchTTHC = document.getElementById('searchTTHC');
-                searchTTHC.disabled = true;
-                searchTTHC.className = "w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-100 border-none ring-1 ring-gray-200 focus:ring-2 focus:ring-brand-500 outline-none transition-all text-gray-700 font-medium disabled:opacity-60 disabled:cursor-not-allowed";
-                
                 const inputMaHoSo = document.getElementById('maHoSo');
                 inputMaHoSo.disabled = true;
                 inputMaHoSo.className = "w-full pl-11 pr-4 py-3.5 rounded-2xl bg-gray-100 border-none ring-1 ring-gray-200 outline-none transition-all text-gray-400 font-bold disabled:opacity-60 disabled:cursor-not-allowed";
